@@ -1,0 +1,68 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Launch Gateway",
+      "type": "python",
+      "request": "launch",
+      "module": "gateway.gateway",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Launch Sensor",
+      "type": "python",
+      "request": "launch",
+      "module": "devices.sensor_temperatura",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Launch Actuator",
+      "type": "python",
+      "request": "launch",
+      "module": "devices.atuador_poste",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Launch Web API (Uvicorn)",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "web_client.backend.main:app",
+        "--reload",
+        "--port",
+        "8000"
+      ],
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "NPM: Launch Frontend",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "serve"
+      ],
+      "cwd": "${workspaceFolder}/web_client/frontend",
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🚀 Launch All Services",
+      "configurations": [
+        "Python: Launch Gateway",
+        "Python: Launch Sensor",
+        "Python: Launch Actuator",
+        "Python: Launch Web API (Uvicorn)",
+        "NPM: Launch Frontend"
+      ],
+      "preLaunchTask": "npm: install - web_client/frontend"
+    }
+  ]
+}
