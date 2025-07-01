@@ -55,9 +55,9 @@ export default {
   data() {
     return {
       devices: [],
-      isLoading: true, // Novo estado para controlar o carregamento inicial
+      isLoading: true, 
       intervalId: null,
-      connectionStatus: 'connecting', // connecting, online, offline
+      connectionStatus: 'connecting', 
     };
   },
   computed: {
@@ -78,10 +78,9 @@ export default {
         this.connectionStatus = 'online';
       } catch (error) {
         console.error("Erro ao buscar dispositivos:", error);
-        this.devices = []; // Limpa os dispositivos em caso de erro
+        this.devices = []; 
         this.connectionStatus = 'offline';
-      } finally {
-        // Garante que o estado de "carregando" seja desativado após a primeira tentativa
+      } finally {       
         if (this.isLoading) {
           this.isLoading = false;
         }
@@ -118,7 +117,7 @@ export default {
 </script>
 
 <style>
-/* O CSS da resposta anterior continua o mesmo. Cole ele aqui. */
+
 :root {
   --bg-color: #1a1b26;
   --surface-color: #24283b;
