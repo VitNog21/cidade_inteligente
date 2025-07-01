@@ -21,7 +21,7 @@ message DiscoveryPacket {
 }
 
 message GatewayRequest {
-  string action = 1; 
+  string action = 1;
 }
 
 message SensorData {
@@ -37,4 +37,11 @@ message Command {
 message StatusResponse {
   bool success = 1;
   string message = 2;
+}
+
+message ClientGatewayRequest {
+  oneof request {
+    string list_devices = 1;    
+    Command command_device = 2; 
+  }
 }

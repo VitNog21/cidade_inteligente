@@ -63,30 +63,35 @@ def handle_device_tcp(conn, addr):
 
 def handle_web_client(conn, addr):
     try:
-        data = conn.recv(1024).decode()
-        request = json.loads(data)
-        
+        data = conn.recv(1024)
+        if not data:
+            return
+
+        request_proto = smart_city_pb2.ClientGatewayRequest()
+        request_proto.ParseFromString(data)
         response = {}
-        if request.get("action") == "LIST_DEVICES":
+        request_type = request_proto.WhichOneof('request')
+
+        if request_type == 'list_devices':
             with lock:
                 response = {"devices": list(devices.values())}
-        elif request.get("action") == "COMMAND":
-            device_id = request.get("device_id")
-            command_action = request.get("command_action")
+        
+        elif request_type == 'command_device':
+            command = request_proto.command_device
+            device_id = command.device_id
+            command_action = command.action
             
             with lock:
                 device_conn = device_sockets.get(device_id)
 
-            if device_conn:
-                cmd = smart_city_pb2.Command()
-                cmd.device_id = device_id
-                cmd.action = command_action
-                device_conn.send(cmd.SerializeToString())
+            if device_conn:              
+                device_conn.send(command.SerializeToString())
                 response = {"status": "success", "message": f"Comando '{command_action}' enviado para {device_id}."}
             else:
-                response = {"status": "error", "message": "Dispositivo não está conectado ou não é um atuador."}
+                response = {"status": "error", "message": "Dispositivo não está conectado."}
         
         conn.sendall(json.dumps(response).encode())
+
     except Exception as e:
         print(f"Gateway: Erro ao manusear cliente web: {e}")
     finally:
@@ -137,7 +142,7 @@ def periodic_discovery():
     while True:
         print("Gateway: Enviando pulso de descoberta periódica...")
         discover_devices()
-        time.sleep(30)
+        time.sleep(15)
 
 if __name__ == "__main__":
     tcp_thread = threading.Thread(target=start_tcp_server, daemon=True)

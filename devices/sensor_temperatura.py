@@ -7,7 +7,7 @@ from proto import smart_city_pb2
 MCAST_GRP = '224.1.1.1'
 MCAST_PORT = 5007
 GATEWAY_IP = '127.0.0.1'
-GATEWAY_UDP_PORT = 10001
+GATEWAY_UDP_port = 10001
 GATEWAY_TCP_PORT = 10000
 
 DEVICE_ID = "temp_sensor_01"
@@ -17,6 +17,12 @@ DEVICE_PORT = 20001
 def send_data_periodically(tcp_conn):
     udp_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while True:
+        try:          
+            tcp_conn.send(b'')
+        except Exception as e:
+            print(f"{DEVICE_ID}: Conexão com Gateway perdida. {e}")
+            return 
+
         temp = random.randint(20, 35)
         
         data = smart_city_pb2.SensorData()
@@ -24,10 +30,10 @@ def send_data_periodically(tcp_conn):
         data.value = temp
         
         try:
-            udp_sock.sendto(data.SerializeToString(), (GATEWAY_IP, GATEWAY_UDP_PORT))
+            udp_sock.sendto(data.SerializeToString(), (GATEWAY_IP, GATEWAY_UDP_port))
             print(f"{DEVICE_ID}: Enviado {temp}°C para o Gateway.")
         except Exception as e:
-            print(f"{DEVICE_ID}: Falha ao enviar dados. {e}")
+            print(f"{DEVICE_ID}: Falha ao enviar dados UDP. {e}")
             break
         time.sleep(15)
 
@@ -68,4 +74,7 @@ def listen_for_discovery():
             tcp_sock.close()
 
 if __name__ == "__main__":
-    listen_for_discovery()
+    while True:
+        listen_for_discovery()
+        print(f"{DEVICE_ID}: Desconectado. Tentando se reconectar em 10 segundos...")
+        time.sleep(10)

@@ -1,5 +1,6 @@
 import socket
 import struct
+import time 
 from proto import smart_city_pb2
 
 MCAST_GRP = '224.1.1.1'
@@ -18,6 +19,7 @@ def handle_commands(conn):
         while True:
             data = conn.recv(1024)
             if not data:
+                print(f"{DEVICE_ID}: Gateway fechou a conexão.")
                 break
             
             command = smart_city_pb2.Command()
@@ -77,4 +79,7 @@ def listen_for_discovery():
             tcp_sock.close()
 
 if __name__ == "__main__":
-    listen_for_discovery()
+    while True:
+        listen_for_discovery()
+        print(f"{DEVICE_ID}: Desconectado. Tentando se reconectar em 10 segundos...")
+        time.sleep(10)
