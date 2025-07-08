@@ -1,6 +1,5 @@
 import socket
 import threading
-import json
 import time
 from proto import smart_city_pb2
 
@@ -69,34 +68,35 @@ def handle_web_client(conn, addr):
 
         request_proto = smart_city_pb2.ClientGatewayRequest()
         request_proto.ParseFromString(data)
-        response = {}
         request_type = request_proto.WhichOneof('request')
 
         if request_type == 'list_devices':
+            response_proto = smart_city_pb2.GatewayClientResponse()
             with lock:
-                response = {"devices": list(devices.values())}
-        
+                for device_dict in devices.values():
+                    device_info_proto = response_proto.devices.add()
+                    device_info_proto.id = device_dict['id']
+                    device_info_proto.type = smart_city_pb2.DeviceType.Value(device_dict['type'])
+                    device_info_proto.status = device_dict['status']
+            
+            conn.sendall(response_proto.SerializeToString())
+
         elif request_type == 'command_device':
             command = request_proto.command_device
             device_id = command.device_id
-            command_action = command.action
             
             with lock:
                 device_conn = device_sockets.get(device_id)
 
-            if device_conn:              
+            if device_conn:
                 device_conn.send(command.SerializeToString())
-                response = {"status": "success", "message": f"Comando '{command_action}' enviado para {device_id}."}
-            else:
-                response = {"status": "error", "message": "Dispositivo não está conectado."}
-        
-        conn.sendall(json.dumps(response).encode())
-
+            
+            conn.sendall(b'')
+            
     except Exception as e:
         print(f"Gateway: Erro ao manusear cliente web: {e}")
     finally:
         conn.close()
-
 
 def start_tcp_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -142,7 +142,7 @@ def periodic_discovery():
     while True:
         print("Gateway: Enviando pulso de descoberta periódica...")
         discover_devices()
-        time.sleep(15)
+        time.sleep(30)
 
 if __name__ == "__main__":
     tcp_thread = threading.Thread(target=start_tcp_server, daemon=True)

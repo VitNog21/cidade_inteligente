@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package smart_city;
 
+option java_package = "br.ufc.trab.proto";
+option java_outer_classname = "SmartCityProto";
+
 enum DeviceType {
   UNKNOWN = 0;
   LAMP = 1;
@@ -41,7 +44,11 @@ message StatusResponse {
 
 message ClientGatewayRequest {
   oneof request {
-    string list_devices = 1;    
-    Command command_device = 2; 
+    string list_devices = 1;
+    Command command_device = 2;
   }
+}
+
+message GatewayClientResponse {
+  repeated DeviceInfo devices = 1;
 }

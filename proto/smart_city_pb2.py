@@ -24,15 +24,16 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16proto/smart_city.proto\x12\nsmart_city\"N\n\nDeviceInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12$\n\x04type\x18\x02 \x01(\x0e\x32\x16.smart_city.DeviceType\x12\x0e\n\x06status\x18\x03 \x01(\t\"Y\n\x0f\x44iscoveryPacket\x12$\n\x04info\x18\x01 \x01(\x0b\x32\x16.smart_city.DeviceInfo\x12\x12\n\nip_address\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\x05\" \n\x0eGatewayRequest\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\t\".\n\nSensorData\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02\",\n\x07\x43ommand\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\x0e\n\x06\x61\x63tion\x18\x02 \x01(\t\"2\n\x0eStatusResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"h\n\x14\x43lientGatewayRequest\x12\x16\n\x0clist_devices\x18\x01 \x01(\tH\x00\x12-\n\x0e\x63ommand_device\x18\x02 \x01(\x0b\x32\x13.smart_city.CommandH\x00\x42\t\n\x07request*4\n\nDeviceType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x08\n\x04LAMP\x10\x01\x12\x0f\n\x0bTEMP_SENSOR\x10\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16proto/smart_city.proto\x12\nsmart_city\"N\n\nDeviceInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12$\n\x04type\x18\x02 \x01(\x0e\x32\x16.smart_city.DeviceType\x12\x0e\n\x06status\x18\x03 \x01(\t\"Y\n\x0f\x44iscoveryPacket\x12$\n\x04info\x18\x01 \x01(\x0b\x32\x16.smart_city.DeviceInfo\x12\x12\n\nip_address\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\x05\" \n\x0eGatewayRequest\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\t\".\n\nSensorData\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x02\",\n\x07\x43ommand\x12\x11\n\tdevice_id\x18\x01 \x01(\t\x12\x0e\n\x06\x61\x63tion\x18\x02 \x01(\t\"2\n\x0eStatusResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"h\n\x14\x43lientGatewayRequest\x12\x16\n\x0clist_devices\x18\x01 \x01(\tH\x00\x12-\n\x0e\x63ommand_device\x18\x02 \x01(\x0b\x32\x13.smart_city.CommandH\x00\x42\t\n\x07request\"@\n\x15GatewayClientResponse\x12\'\n\x07\x64\x65vices\x18\x01 \x03(\x0b\x32\x16.smart_city.DeviceInfo*4\n\nDeviceType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x08\n\x04LAMP\x10\x01\x12\x0f\n\x0bTEMP_SENSOR\x10\x02\x42#\n\x11\x62r.ufc.trab.protoB\x0eSmartCityProtob\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'proto.smart_city_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
-  DESCRIPTOR._loaded_options = None
-  _globals['_DEVICETYPE']._serialized_start=495
-  _globals['_DEVICETYPE']._serialized_end=547
+  _globals['DESCRIPTOR']._loaded_options = None
+  _globals['DESCRIPTOR']._serialized_options = b'\n\021br.ufc.trab.protoB\016SmartCityProto'
+  _globals['_DEVICETYPE']._serialized_start=561
+  _globals['_DEVICETYPE']._serialized_end=613
   _globals['_DEVICEINFO']._serialized_start=38
   _globals['_DEVICEINFO']._serialized_end=116
   _globals['_DISCOVERYPACKET']._serialized_start=118
@@ -47,4 +48,6 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_STATUSRESPONSE']._serialized_end=387
   _globals['_CLIENTGATEWAYREQUEST']._serialized_start=389
   _globals['_CLIENTGATEWAYREQUEST']._serialized_end=493
+  _globals['_GATEWAYCLIENTRESPONSE']._serialized_start=495
+  _globals['_GATEWAYCLIENTRESPONSE']._serialized_end=559
 # @@protoc_insertion_point(module_scope)
