@@ -55,4 +55,4 @@ async def send_device_command(deviceId: str, command_req: dict):
             s.recv(1024) 
             return {"status": "success", "message": "Comando enviado."}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro de comunicação com o Gateway: {e}")
+        raise HTTPException(status_code=500, detail=f"Erro na comunicação com o Gateway: {e}")

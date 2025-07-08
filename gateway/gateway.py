@@ -94,7 +94,7 @@ def handle_web_client(conn, addr):
             conn.sendall(b'')
             
     except Exception as e:
-        print(f"Gateway: Erro ao manusear cliente web: {e}")
+        print(f"Gateway: Erro no cliente web: {e}")
     finally:
         conn.close()
 
@@ -140,7 +140,7 @@ def discover_devices():
 
 def periodic_discovery():
     while True:
-        print("Gateway: Enviando pulso de descoberta periódica...")
+        print("Gateway: Enviando pulso de descoberta periódica....")
         discover_devices()
         time.sleep(30)
 
